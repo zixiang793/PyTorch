@@ -1,0 +1,6 @@
+# 已在现有 conda 环境 ptl-dl 中验证；无需重新安装已经存在的包。
+# torch 与 torchvision 需要配套版本；GPU 构建应按 PyTorch 官网选择。
+torch>=2.6
+torchvision>=0.21
+tensorboard>=2.18
+matplotlib>=3.9
