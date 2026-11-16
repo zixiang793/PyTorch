@@ -20,9 +20,9 @@ import matplotlib.pyplot as plt
 import torch
 from torch import nn
 from torch.optim.lr_scheduler import OneCycleLR
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, TensorDataset
 from torch.utils.tensorboard import SummaryWriter
-from torchvision import datasets, transforms
+from torchvision import datasets
 
 
 # ==================== 1. 三组共用的参数 ====================
@@ -48,12 +48,14 @@ print(f"GPU: {torch.cuda.get_device_name(device)} | Comparison: {comparison_id}"
 
 
 # ==================== 2. 准备共同的数据 ====================
-transform = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize((0.1307,), (0.3081,)),
-])
-train_dataset = datasets.MNIST(code_dir / "data", train=True, download=True, transform=transform)
-test_dataset = datasets.MNIST(code_dir / "data", train=False, download=True, transform=transform)
+train_data = datasets.MNIST(code_dir / "data", train=True, download=True)
+test_data = datasets.MNIST(code_dir / "data", train=False, download=True)
+# MNIST 很小，固定的转换只做一次：补上通道维度，像素除以 255，再标准化。
+# 与原 MLP 的 ToTensor + Normalize 数值相同，避免三组每轮重复转换 PIL 图片。
+train_images = (train_data.data.unsqueeze(1).float() / 255 - 0.1307) / 0.3081
+test_images = (test_data.data.unsqueeze(1).float() / 255 - 0.1307) / 0.3081
+train_dataset = TensorDataset(train_images, train_data.targets)
+test_dataset = TensorDataset(test_images, test_data.targets)
 train_eval_loader = DataLoader(train_dataset, batch_size=256, shuffle=False)
 test_loader = DataLoader(test_dataset, batch_size=256, shuffle=False)
 steps_per_epoch = math.ceil(len(train_dataset) / batch_size)
