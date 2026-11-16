@@ -1,4 +1,13 @@
-# MNIST 两层感知机：GPU 训练与依次查看结果
+# PyTorch 实操代码
+
+| 文件 | 用途 |
+| --- | --- |
+| [MLP.py](MLP.py) | 原始 MNIST 两层感知机，固定学习率，适合从头阅读训练流程 |
+| [MLP_lr_compare.py](MLP_lr_compare.py) | 相同条件下对比 fixed、Warmup + Cosine、OneCycleLR |
+
+新增对比运行：`python MLP_lr_compare.py`。参数仍集中在文件开头，使用 CUDA；三组完成后依次显示指标对比和学习率曲线。TensorBoard 使用同一组标签，可勾选不同策略叠加观察。数值和权重输出到本地 `outputs/lr_compare_<时间>/`；完整实验说明与结果见 [实验记录](../experiments/lr_schedulers/README.md)。
+
+## 原始 MNIST 两层感知机：GPU 训练与依次查看结果
 
 代码全部在 `MLP.py` 中，按顺序展开。仍然没有自定义类、辅助函数或命令行参数；实验名称和训练参数直接在文件开头修改。
 

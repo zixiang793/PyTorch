@@ -1,0 +1,34 @@
+{
+  "epochs": 5,
+  "batch_size": 128,
+  "hidden_size": 128,
+  "seed": 42,
+  "max_lr": 0.1,
+  "start_lr": 0.01,
+  "min_lr": 0.0001,
+  "warmup_ratio": 0.1,
+  "onecycle_pct": 0.3,
+  "optimizer": "SGD",
+  "momentum": 0,
+  "weight_decay": 0,
+  "cycle_momentum": false,
+  "strategies": [
+    "fixed",
+    "warmup_cosine",
+    "onecycle"
+  ],
+  "total_steps": 2345,
+  "warmup_steps": 234,
+  "train_samples": 60000,
+  "test_samples": 10000,
+  "normalization": {
+    "mean": 0.1307,
+    "std": 0.3081
+  },
+  "comparison_id": "lr_compare_20261116_094346_581571",
+  "torch_version": "2.6.0+cu124",
+  "torchvision_version": "0.21.0+cu124",
+  "tensorboard_version": "2.21.0",
+  "python_version": "3.10.22",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU"
+}
